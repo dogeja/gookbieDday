@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공포의 국비지원 D-DAY</title>
+    <link
+      rel="icon"
+      href="https://media.istockphoto.com/id/1139149306/vector/letter-d-day-calendar-vector-icon.jpg?s=170667a&w=0&k=20&c=UDrhaTX7eWWjhs3kwiVCvSxaIIBXJUpn4YgDkk9vWVw="
+    />
+    <style>
+      * {
+        user-select: none;
+      }
+      @font-face {
+        font-family: "Pretendard-Regular";
+        src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+          format("woff");
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "GmarketSansMedium";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      .timer_wrap {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 100%;
+        height: 100vh;
+        align-items: center;
+        top: 50%;
+        justify-content: center;
+      }
+
+      img {
+        width: 200px;
+        transition: 0.7s ease 0.35s;
+      }
+      img:hover {
+        opacity: 0;
+      }
+      .background {
+        background-image: url(https://gifimage.net/wp-content/uploads/2017/11/falling-snow-gif-transparent-background.gif);
+        z-index: 300;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        pointer-events: none;
+      }
+      @media all and (max-width: 429px) {
+        div {
+          font-size: 18px;
+          font-family: "Pretendard-Regular";
+          margin: 0.35rem;
+          font-weight: 700;
+        }
+        .change {
+          font-size: 18px;
+          font-family: "Pretendard-Regular";
+          margin: 0.65rem;
+          font-weight: 700;
+        }
+        div:not(div:nth-of-type(2)) {
+          font-size: 16px;
+          font-family: "GmarketSansMedium";
+        }
+      }
+      @media (min-width: 430px) and (max-width: 539px) {
+        div {
+          font-size: 24px;
+          font-family: "Pretendard-Regular";
+          margin: 0.45rem;
+          font-weight: 700;
+        }
+        .change {
+          font-size: 24px;
+          font-family: "Pretendard-Regular";
+          margin: 0.65rem;
+          font-weight: 700;
+        }
+        div:not(div:nth-of-type(2)) {
+          font-size: 24px;
+          font-family: "GmarketSansMedium";
+        }
+      }
+      @media (min-width: 540px) {
+        div {
+          font-size: 30px;
+          font-family: "Pretendard-Regular";
+          margin: 0.65rem;
+          font-weight: 700;
+        }
+        .change {
+          font-size: 30px;
+          font-family: "Pretendard-Regular";
+          margin: 0.65rem;
+          font-weight: 700;
+        }
+        div:not(div:nth-of-type(2)) {
+          font-size: 30px;
+          font-family: "GmarketSansMedium";
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="timer_wrap">
+      <span>현재시각</span>
+      <div class="nowdate"></div>
+      <div>국비지원 종료까지</div>
+      <div class="leftDate"></div>
+      <span class="change">즐거운 점심시간은</span>
+      <div class="lunchTime"></div>
+      <img
+        class="cat"
+        src="https://i.gifer.com/origin/d6/d66620ccdb4aee4182879a2c07d393ef.gif"
+        alt="thumbsupcat"
+      />
+      <!-- <div class="weekDay"></div> -->
+      <div class="background"></div>
+    </div>
+    <script>
+      const nowon = document.querySelector(".nowdate");
+      const end = document.querySelector(".leftDate");
+      const lunch = document.querySelector(".lunchTime");
+      const change = document.querySelector(".change");
+      const weekDay = document.querySelector(".weekDay");
+      function printNowDate() {
+        const nowdate = new Date(),
+          month = String(nowdate.getMonth() + 1).padStart(2, "0"),
+          dDate = String(nowdate.getDate()).padStart(2, "0"),
+          hours = String(nowdate.getHours()).padStart(2, "0"),
+          minutes = String(nowdate.getMinutes()).padStart(2, "0"),
+          seconds = String(nowdate.getSeconds()).padStart(2, "0");
+
+        nowon.innerText = `${month}월 ${dDate}일 ${hours}시 ${minutes}분 ${seconds}초 입니다.`;
+      }
+      function printLeftDate() {
+        const endDate = new Date("2023-02-01");
+        const nowdate = new Date();
+
+        const diffTime = endDate - nowdate;
+        const diffDay = String(
+          Math.floor(diffTime / (1000 * 60 * 60 * 24))
+        ).padStart(2, "0");
+        const diffHours = String(
+          Math.floor(diffTime / (1000 * 60 * 60) - diffDay * 24) - 9
+        ).padStart(2, "0");
+        const diffMin = String(
+          Math.floor((diffTime / (1000 * 60)) % 60)
+        ).padStart(2, "0");
+        const diffSec = String((Math.floor(diffTime / 1000) % 60) + 1).padStart(
+          2,
+          "0"
+        );
+        end.innerText = `${diffDay}일 ${diffHours}시 ${diffMin}분 ${diffSec}초 남았습니다.`;
+      }
+      function printLunchTime() {
+        let nowDate = new Date();
+        // const nowDate = new Date(2022, 12, 21, 18, 40, 0, 0);
+        let baseDate = new Date(
+          `${nowDate.getFullYear()}`,
+          `${nowDate.getMonth()}`,
+          `${nowDate.getDate()}`,
+          13,
+          10,
+          0,
+          0
+        );
+        let diffLunchDate = baseDate - nowDate;
+        let diffHours = String(
+          Math.floor(diffLunchDate / (1000 * 60 * 60))
+        ).padStart("2", 0);
+        let diffMin = String(
+          Math.floor(diffLunchDate / (1000 * 60) - diffHours * 60)
+        ).padStart("2", 0);
+        let diffSec = String(Math.floor((diffLunchDate / 1000) % 60)).padStart(
+          "2",
+          0
+        );
+        if (diffHours >= 0) {
+          lunch.innerText = `${diffHours}시간 ${diffMin}분 ${diffSec}초 남았습니다..`;
+        } else {
+          const nowDate = new Date();
+          baseDate = new Date(
+            `${nowDate.getFullYear()}`,
+            `${nowDate.getMonth()}`,
+            `${nowDate.getDate()}`,
+            17,
+            49,
+            0,
+            0
+          );
+          let diffLunchDate = baseDate - nowDate;
+          diffLunchDate = baseDate - nowDate;
+          diffHours = String(
+            Math.floor(diffLunchDate / (1000 * 60 * 60))
+          ).padStart("2", 0);
+          diffMin = String(
+            Math.floor(diffLunchDate / (1000 * 60) - diffHours * 60)
+          ).padStart("2", 0);
+          diffSec = String(
+            Math.floor(((diffLunchDate / 1000) % 60) + 1)
+          ).padStart("2", 0);
+
+          change.innerText = `즐거운 귀가시간은 `;
+          lunch.innerText = `${diffHours}시간 ${diffMin}분 ${diffSec}초 남았습니다..`;
+          if (nowDate > baseDate) {
+            change.innerText = `집이다~`;
+            lunch.innerText = "";
+            const catImg = document.querySelector(".cat");
+            catImg.src = `https://i.pinimg.com/originals/13/e1/41/13e14178908149dd822d32c24d1d4515.jpg`;
+          }
+        }
+      }
+      /*  function printWeekDay() {
+        const endDate = new Date("2023-02-01");
+        // const nowDate = new Date("2023-01-01");
+        const nowDate = new Date();
+        const diffDay = endDate - nowDate;
+        const diffDate = Math.floor(diffDay / (1000 * 60 * 60 * 24));
+        let count = 0;
+        console.log(diffDate);
+        console.log(count);
+        let tempDay = nowDate.getday();
+        for (i = 0; i < diffDate; i++) {
+          if (tempDay == 6 || tempDay == 0) {
+            count += 0;
+          } else {
+            count += 1;
+          }
+        }
+        console.log(count);
+      } */
+      printLunchTime();
+      printNowDate();
+      printLeftDate();
+      /*       printWeekDay();
+       */ // setInterval(printWeekDay, 1000);
+      setInterval(printLunchTime, 1000);
+      setInterval(printLeftDate, 1000);
+      setInterval(printNowDate, 1000);
+    </script>
+  </body>
+</html>
