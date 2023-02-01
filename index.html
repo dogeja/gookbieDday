@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>공포의 국비지원 D-DAY</title>
+    <title>행복의 퇴근시간 계산기</title>
     <link
       rel="icon"
       href="https://media.istockphoto.com/id/1139149306/vector/letter-d-day-calendar-vector-icon.jpg?s=170667a&w=0&k=20&c=UDrhaTX7eWWjhs3kwiVCvSxaIIBXJUpn4YgDkk9vWVw="
@@ -117,8 +117,7 @@
     <div class="timer_wrap">
       <span>현재시각</span>
       <div class="nowdate"></div>
-      <div>국비지원 종료까지</div>
-      <div class="leftDate"></div>
+      
       <span class="change">즐거운 점심시간은</span>
       <div class="lunchTime"></div>
       <img
@@ -145,26 +144,7 @@
 
         nowon.innerText = `${month}월 ${dDate}일 ${hours}시 ${minutes}분 ${seconds}초 입니다.`;
       }
-      function printLeftDate() {
-        const endDate = new Date("2023-02-01");
-        const nowdate = new Date();
-
-        const diffTime = endDate - nowdate;
-        const diffDay = String(
-          Math.floor(diffTime / (1000 * 60 * 60 * 24))
-        ).padStart(2, "0");
-        const diffHours = String(
-          Math.floor(diffTime / (1000 * 60 * 60) - diffDay * 24) - 9
-        ).padStart(2, "0");
-        const diffMin = String(
-          Math.floor((diffTime / (1000 * 60)) % 60)
-        ).padStart(2, "0");
-        const diffSec = String((Math.floor(diffTime / 1000) % 60) + 1).padStart(
-          2,
-          "0"
-        );
-        end.innerText = `${diffDay}일 ${diffHours}시 ${diffMin}분 ${diffSec}초 남았습니다.`;
-      }
+     
       function printLunchTime() {
         let nowDate = new Date();
         // const nowDate = new Date(2022, 12, 21, 18, 40, 0, 0);
@@ -172,8 +152,8 @@
           `${nowDate.getFullYear()}`,
           `${nowDate.getMonth()}`,
           `${nowDate.getDate()}`,
-          13,
-          10,
+          12,
+          0,
           0,
           0
         );
@@ -213,7 +193,7 @@
             Math.floor(((diffLunchDate / 1000) % 60) + 1)
           ).padStart("2", 0);
 
-          change.innerText = `즐거운 귀가시간은 `;
+          change.innerText = `즐거운 퇴근시간은 `;
           lunch.innerText = `${diffHours}시간 ${diffMin}분 ${diffSec}초 남았습니다..`;
           if (nowDate > baseDate) {
             change.innerText = `집이다~`;
